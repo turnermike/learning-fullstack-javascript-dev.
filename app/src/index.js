@@ -4,19 +4,32 @@ import PropTypes from 'prop-types';
 
 // const color = Math.random() > 0.5 ? 'green' : 'red';
 
-const App = props => {
-  return <h2 className="text-center">{props.headerMessage}</h2>;
+const Header = ({ message }) => {
+  return (
+    <h2 className="text-color">
+      {message}
+    </h2>
+  );
 };
 
-App.propTypes = {
+Header.propTypes = {
   // headerMessage: React.PropTypes.string.isRequired
-  headerMessage: PropTypes.string.isRequired
+  message: PropTypes.string.isRequired
 };
 
-App.defaultProps = {
-  headerMessage: 'Hello!!'
+
+const App = () => {
+  return (
+    <div className="App">
+      <Header message="Naming Contests" />
+      <div>
+      ...
+      </div>
+    </div>
+  );
 };
 
+// render method
 ReactDOM.render(
   // React.createElement('h2', null, 'Hello React'),
 
@@ -28,6 +41,6 @@ ReactDOM.render(
   //     Hello React JSX -- {Math.random()}
   // </h2>,
 
-  <App headerMessage="Hello props!" />,
+  <App />,
   document.getElementById('root')
 );
