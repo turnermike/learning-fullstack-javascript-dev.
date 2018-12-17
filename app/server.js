@@ -16,6 +16,7 @@ server.get('/', (req, res) => {
     });
 });
 
+
 server.use('/api', apiRouter);
 server.use(express.static('public'));
 
