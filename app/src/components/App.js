@@ -8,6 +8,19 @@ class App extends React.Component {
   state = {
     pageHeader: 'Naming Contests'
   };
+  componentDidMount() {
+    // ajax stuff
+    // timers/liseners
+
+    // console.log('did Mount');
+    // debugger;
+  };
+  componentWillUnmount() {
+    // clean timers/listners here
+
+    // console.log('will Unmount');
+    // debugger;
+  };
   render() {
     return (
       <div className="App">
