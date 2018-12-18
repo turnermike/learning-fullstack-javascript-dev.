@@ -1,7 +1,11 @@
 import React from 'react';
-// import axios from 'axios';
+import propTypes from 'prop-types';
 import Header from './Header';
 import ContestList from './ContestList';
+
+// alias of history api pushState
+const pushState = (obj, url) =>
+  window.history.pushState(obj, '', url);
 
 class App extends React.Component {
 
@@ -29,21 +33,37 @@ class App extends React.Component {
 
 
   }
+
   componentWillUnmount() {
     // clean timers/listners here
     // console.log('will Unmount');
     // debugger;
   }
+
+  fetchContest = (contestId) => {
+    pushState(
+      { currentContestId: contestId },
+      `/contest/${contestId}`
+    );
+  }
+
   // using '...' spread operator in ContestPreview component so it gets all object properies of contests
   render() {
     return (
       <div className="App">
         <Header message={this.state.pageHeader} />
-        <ContestList contests={this.state.contests} />
+        <ContestList
+          onContestClick={this.fetchContest}
+          contests={this.state.contests} />
       </div>
     );
   }
 }
+
+
+App.propTypes = {
+  initialContests: propTypes.array
+};
 
 // Stateless Example:
 // const App = () => {
