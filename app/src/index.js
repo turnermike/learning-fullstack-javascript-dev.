@@ -5,7 +5,7 @@ import App from './components/App';
 
 // render method
 ReactDOM.render(
-  <App />,
+  <App initialContests={[]} />,
   document.getElementById('root')
 );
 

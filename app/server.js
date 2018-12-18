@@ -19,12 +19,18 @@ server.use(sassMiddleware({
 // express will look for ejs templates under the 'views' dir
 server.set('view engine', 'ejs');
 
+// get contest data
+import serverRender from './serverRender';
+
 // default route
 server.get('/', (req, res) => {
-  // res.send('Hello Express');
-  res.render('index', {
-    content: 'Hello Express and <em>EJS</em>!',
-  });
+  serverRender()
+    .then(content => {
+      res.render('index', {
+        content
+      });
+    })
+    .catch(console.error)
 });
 
 server.use('/api', apiRouter);
@@ -39,7 +45,7 @@ server.use(express.static('public'));
 //     });
 // });
 
-server.listen(config.port, () => {
+server.listen(config.port, config.host, () => {
   console.log('Express listening on port ', config.port);
 });
 

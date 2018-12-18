@@ -7,7 +7,7 @@ class App extends React.Component {
 
   state = {
     pageHeader: 'Naming Contests',
-    contests: []
+    contests: this.props.initialContests
   };
 
   componentDidMount() {
@@ -35,7 +35,6 @@ class App extends React.Component {
   }
   // using '...' spread operator in ContestPreview component so it gets all object properies of contests
   render() {
-
     return (
       <div className="App">
         <Header message={this.state.pageHeader} />
