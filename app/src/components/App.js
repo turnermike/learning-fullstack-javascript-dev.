@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import Header from './Header';
 import ContestPreview from './ContestPreview';
 
@@ -16,15 +16,15 @@ class App extends React.Component {
     // console.log('did Mount');
     // debugger;
 
-    axios.get('/api/contests')
-      .then(res => {
-        // console.log('res', res.data.contests);
-        this.setState({
-          contests: res.data.contests
-        });
+    // axios.get('/api/contests')
+    //   .then(res => {
+    //     // console.log('res', res.data.contests);
+    //     this.setState({
+    //       contests: res.data.contests
+    //     });
 
-      })
-      .catch(console.error);
+    //   })
+    //   .catch(console.error);
 
 
   }
