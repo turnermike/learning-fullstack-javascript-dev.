@@ -41,10 +41,13 @@ class App extends React.Component {
   }
 
   fetchContest = (contestId) => {
+    // change route to /contest/<id>
     pushState(
       { currentContestId: contestId },
       `/contest/${contestId}`
     );
+    // look up the contest
+
   }
 
   // using '...' spread operator in ContestPreview component so it gets all object properies of contests
