@@ -15,6 +15,7 @@ const getApiUrl = contestId => {
 };
 
 const getInitialData = (contestId, apiData) => {
+
   if(contestId){
     return {
       currentContestId: apiData.id,
