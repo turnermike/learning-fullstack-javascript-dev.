@@ -2,6 +2,7 @@ import React from 'react';
 import propTypes from 'prop-types';
 import Header from './Header';
 import ContestList from './ContestList';
+import Contest from './Contest';
 
 // alias of history api pushState
 const pushState = (obj, url) =>
@@ -47,7 +48,20 @@ class App extends React.Component {
       `/contest/${contestId}`
     );
     // look up the contest
+    this.setState({
+      pageHeader: this.state.contests[contestId].contestName,
+      currentContestId: contestId
+    });
+  }
 
+  currentContent() {
+    if (this.state.currentContestId) {
+      return <Contest {...this.state.contests[this.state.currentContestId]} />;
+    }
+
+    return <ContestList
+            onContestClick={this.fetchContest}
+            contests={this.state.contests} />;
   }
 
   // using '...' spread operator in ContestPreview component so it gets all object properies of contests
@@ -55,9 +69,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Header message={this.state.pageHeader} />
-        <ContestList
-          onContestClick={this.fetchContest}
-          contests={this.state.contests} />
+        {this.currentContent()}
       </div>
     );
   }
@@ -65,7 +77,7 @@ class App extends React.Component {
 
 
 App.propTypes = {
-  initialContests: propTypes.array
+  initialContests: propTypes.object
 };
 
 // Stateless Example:

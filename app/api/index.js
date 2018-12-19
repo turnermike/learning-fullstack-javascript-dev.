@@ -6,7 +6,7 @@ const router = express.Router();
 
 const contests = data.contests.reduce((obj, contest) => {
   obj[contest.id] = contest;
-  console.log('obj', obj);
+  // console.log('obj', obj);
   return obj;
 }, {});
 
