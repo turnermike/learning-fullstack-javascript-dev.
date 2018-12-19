@@ -2,8 +2,9 @@ import config, { nodeEnv, logStars } from './config';
 import apiRouter from './api';
 import sassMiddleware from 'node-sass-middleware';
 import path from 'path';
-
+import serverRender from './serverRender';
 import express from 'express';
+
 const server = express();
 
 // use node-sass-middleware module
@@ -19,18 +20,17 @@ server.use(sassMiddleware({
 // express will look for ejs templates under the 'views' dir
 server.set('view engine', 'ejs');
 
-// get contest data
-import serverRender from './serverRender';
 
 // default route
 server.get('/', (req, res) => {
   serverRender()
-    .then(content => {
+    .then(({ initialMarkup, initialData }) => {
       res.render('index', {
-        content
+        initialMarkup,
+        initialData
       });
     })
-    .catch(console.error)
+    .catch(console.error);
 });
 
 server.use('/api', apiRouter);

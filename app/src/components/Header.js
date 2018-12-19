@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import propTypes from 'prop-types';
 
 const Header = ({ message }) => {
   return (
@@ -10,8 +10,7 @@ const Header = ({ message }) => {
 };
 
 Header.propTypes = {
-  // headerMessage: React.PropTypes.string.isRequired
-  message: PropTypes.string.isRequired
+  message: propTypes.string.isRequired
 };
 
 export default Header;

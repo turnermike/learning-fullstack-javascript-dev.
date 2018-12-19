@@ -1,3 +1,5 @@
+// /api router
+
 import express from 'express';
 import data from '../src/testData';
 // console.log('data', data);
@@ -16,12 +18,15 @@ router.get('/contests', (req, res) => {
     });
 });
 
-router.get('/contests/:contestId', (req, res) => {
+router.get('/contest/:contestId', (req, res) => {
+
+  // res.send("hi");
 
   let contest = contests[req.params.contestId];
+  console.log('contest', contest);
   contest.description = "Some place holder texy.";
 
-    res.send(contest);
+  res.send(contest);
 
 });
 

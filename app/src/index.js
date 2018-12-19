@@ -4,16 +4,11 @@ import axios from 'axios';
 
 import App from './components/App';
 
-// render method
-// ReactDOM.render(
-//   <App initialContests={[]} />,
-//   document.getElementById('root')
-// );
-
 axios.get('/api/contests')
   .then(res => {
+    // console.log('res.data', res.data);
     ReactDOM.render(
-      <App initialContests={res.data.contests} />,
+      <App initialData={res.data} />,
       document.getElementById('root')
     );
   })

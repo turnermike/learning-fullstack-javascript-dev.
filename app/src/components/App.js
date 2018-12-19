@@ -3,7 +3,7 @@ import propTypes from 'prop-types';
 import Header from './Header';
 import ContestList from './ContestList';
 import Contest from './Contest';
-import * as api from '../api';
+import * as api  from '../api';
 
 // alias of history api pushState
 const pushState = (obj, url) =>
@@ -11,10 +11,16 @@ const pushState = (obj, url) =>
 
 class App extends React.Component {
 
-  state = {
-    pageHeader: 'Naming Contests',
-    contests: this.props.initialContests
+  static propTypes = {
+    initialData: propTypes.object.isRequired
   };
+
+  // state = {
+  //   contests: this.props.initialContests
+  // };
+  state = this.props.initialData;
+
+
 
   componentDidMount() {
     // ajax stuff
@@ -52,23 +58,35 @@ class App extends React.Component {
 
     // look up the contest
     api.fetchContest(contestId).then(contest => {
+        console.log('contest', contest);
         this.setState({
-          pageHeader: contest.contestName,
           currentContestId: contest.id,
           contests: {
             ...this.state.contests,
             [contest.id]: contest
           }
         });
+        // console.log('this.state', this.state);
     });
 
+  }
+
+  currentContest() {
+    return this.state.contests[this.state.currentContestId];
+  }
+
+  pageHeader() {
+    if(this.state.currentContestId) {
+      return this.currentContest().contestName;
+    }
+    return 'Naming Contests';
   }
 
   // get the contest component
   currentContent() {
 
     if (this.state.currentContestId) {
-      return <Contest {...this.state.contests[this.state.currentContestId]} />;
+      return <Contest {...this.currentContest()} />;
     }
 
     return <ContestList
@@ -80,17 +98,13 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Header message={this.state.pageHeader} />
+        <Header message={this.pageHeader()} />
         {this.currentContent()}
       </div>
     );
   }
 }
 
-
-App.propTypes = {
-  initialContests: propTypes.object
-};
 
 // Stateless Example:
 // const App = () => {
