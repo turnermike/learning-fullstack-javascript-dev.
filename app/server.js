@@ -22,8 +22,9 @@ server.set('view engine', 'ejs');
 
 
 // default route
-server.get('/', (req, res) => {
-  serverRender()
+server.get(['/', '/contest/:contestId'], (req, res) => {
+
+  serverRender(req.params.contestId)
     .then(({ initialMarkup, initialData }) => {
       res.render('index', {
         initialMarkup,
@@ -31,6 +32,7 @@ server.get('/', (req, res) => {
       });
     })
     .catch(console.error);
+
 });
 
 server.use('/api', apiRouter);
