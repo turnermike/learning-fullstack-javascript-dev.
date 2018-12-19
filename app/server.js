@@ -23,16 +23,17 @@ server.set('view engine', 'ejs');
 
 // default route
 server.get(['/', '/contest/:contestId'], (req, res) => {
-  res.send(req.params.contestId);
 
-  // serverRender(req.params.contestId)
-  //   .then(({ initialMarkup, initialData }) => {
-  //     res.render('index', {
-  //       initialMarkup,
-  //       initialData
-  //     });
-  //   })
-  //   .catch(console.error);
+  // res.send(req.params.contestId);
+
+  serverRender(req.params.contestId)
+    .then(({ initialMarkup, initialData }) => {
+      res.render('index', {
+        initialMarkup,
+        initialData
+      });
+    })
+    .catch(console.error);
 
 });
 

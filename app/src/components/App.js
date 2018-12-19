@@ -102,9 +102,11 @@ class App extends React.Component {
   currentContent() {
 
     if (this.state.currentContestId) {
+
       return <Contest
               contestListClick={this.fetchContestList}
               {...this.currentContest()} />;
+
     }
 
     return <ContestList
