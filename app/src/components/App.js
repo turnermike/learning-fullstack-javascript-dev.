@@ -3,6 +3,7 @@ import propTypes from 'prop-types';
 import Header from './Header';
 import ContestList from './ContestList';
 import Contest from './Contest';
+import * as api from '../api';
 
 // alias of history api pushState
 const pushState = (obj, url) =>
@@ -42,19 +43,30 @@ class App extends React.Component {
   }
 
   fetchContest = (contestId) => {
+
     // change route to /contest/<id>
     pushState(
       { currentContestId: contestId },
       `/contest/${contestId}`
     );
+
     // look up the contest
-    this.setState({
-      pageHeader: this.state.contests[contestId].contestName,
-      currentContestId: contestId
+    api.fetchContest(contestId).then(contest => {
+        this.setState({
+          pageHeader: contest.contestName,
+          currentContestId: contest.id,
+          contests: {
+            ...this.state.contests,
+            [contest.id]: contest
+          }
+        });
     });
+
   }
 
+  // get the contest component
   currentContent() {
+
     if (this.state.currentContestId) {
       return <Contest {...this.state.contests[this.state.currentContestId]} />;
     }
