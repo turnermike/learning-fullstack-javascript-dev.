@@ -9,6 +9,10 @@ import * as api  from '../api';
 const pushState = (obj, url) =>
   window.history.pushState(obj, '', url);
 
+const onPopState = handler => {
+  window.onpopstate = handler;
+}
+
 class App extends React.Component {
 
   static propTypes = {
@@ -28,16 +32,13 @@ class App extends React.Component {
     // console.log('did Mount');
     // debugger;
 
-    // this was moved to src/index.js
-    // axios.get('/api/contests')
-    //   .then(res => {
-    //     // console.log('res', res.data.contests);
-    //     this.setState({
-    //       contests: res.data.contests
-    //     });
+    onPopState((event) => {
+      // console.log('event.state', event.state);
+      this.setState({
+        currentContestId: (event.state || {}).currentContestId
+      });
 
-    //   })
-    //   .catch(console.error);
+    });
 
 
   }
@@ -46,6 +47,8 @@ class App extends React.Component {
     // clean timers/listners here
     // console.log('will Unmount');
     // debugger;
+
+    onPopState(null);
   }
 
   fetchContest = (contestId) => {
