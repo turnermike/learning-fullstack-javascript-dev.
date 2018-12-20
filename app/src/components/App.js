@@ -61,12 +61,12 @@ class App extends React.Component {
 
     // look up the contest
     api.fetchContest(contestId).then(contest => {
-        console.log('contest', contest);
+        // console.log('contest', contest);
         this.setState({
-          currentContestId: contest.id,
+          currentContestId: contest._id,
           contests: {
             ...this.state.contests,
-            [contest.id]: contest
+            [contest._id]: contest
           }
         });
         // console.log('this.state', this.state);

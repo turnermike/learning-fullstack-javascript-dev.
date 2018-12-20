@@ -33,7 +33,12 @@ server.get(['/', '/contest/:contestId'], (req, res) => {
         initialData
       });
     })
-    .catch(console.error);
+    // .catch(console.error);
+    .catch(error => {
+      // res.send(error.toString());
+      console.error(error.toString());
+      res.status(404).send('Bad Request');  // return 404 error
+    });
 
 });
 

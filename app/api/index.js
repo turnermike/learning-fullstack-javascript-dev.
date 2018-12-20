@@ -2,7 +2,7 @@
 import express from 'express';
 // import data from '../src/testData';
 // console.log('data', data);
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectID } from 'mongodb';
 import assert from 'assert';
 import config from '../config';
 
@@ -33,7 +33,6 @@ router.get('/contests', (req, res) => {
 
     // use .project to select fields
     .project({
-      id: 1,
       categoryName: 1,
       contestName: 1,
       nameIds: 1
@@ -49,7 +48,7 @@ router.get('/contests', (req, res) => {
         }
 
         // add to new object
-        contests[contest.id] = contest;
+        contests[contest._id] = contest;
 
     });
 
@@ -63,11 +62,11 @@ router.get('/contests', (req, res) => {
  */
 router.get('/names/:nameIds', (req, res) => {
 
-  const nameIds = req.params.nameIds.split(',').map(Number);
+  const nameIds = req.params.nameIds.split(',').map(ObjectID);
 
   let names = {};
 
-  mdb.collection('names').find({ id: {$in: nameIds }})
+  mdb.collection('names').find({ _id: {$in: nameIds }})
 
     .each((err, name) => {
       assert.equal(null, err);
@@ -79,7 +78,7 @@ router.get('/names/:nameIds', (req, res) => {
         }
 
         // add to new object
-        names[name.id] = name;
+        names[name._id] = name;
 
     });
 
@@ -91,7 +90,7 @@ router.get('/names/:nameIds', (req, res) => {
 router.get('/contest/:contestId', (req, res) => {
 
   mdb.collection('contests')
-    .findOne({ id: Number(req.params.contestId) })
+    .findOne({ _id: ObjectID(req.params.contestId) })
     .then(contest => res.send(contest))
     .catch(console.error);
 
