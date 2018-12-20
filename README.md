@@ -16,3 +16,7 @@ Using Webpack to bundle JS.
 ```
 npm run dev
 ```
+
+## MongoDB
+
+Database name: learning-fullstack-javascript-dev

@@ -12,10 +12,11 @@ export const logStars = function(message) {
 
 // default export object
 export default {
-    port: env.port || 8080,
-    host: env.host || '0.0.0.0',
-    get serverUrl() {
-      return `http://${this.host}:${this.port}`;
-    }
+  mongodbUri: 'mongodb://localhost:27017/learning-fullstack-javascript-dev',
+  port: env.port || 8080,
+  host: env.host || '0.0.0.0',
+  get serverUrl() {
+    return `http://${this.host}:${this.port}`;
+}
 
 };
