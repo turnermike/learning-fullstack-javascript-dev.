@@ -43,7 +43,7 @@ router.get('/contests', (req, res) => {
 
         if(!contest){
           // no more contests
-          res.send(contests);
+          res.send({ contests });
           return;
         }
 

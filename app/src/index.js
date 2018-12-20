@@ -14,9 +14,9 @@ axios.get('/api/contests')
   })
   .catch(console.error);
 
-setTimeout(function () {
-  ReactDOM.render(
-    <h2>Clear!!</h2>,
-    document.getElementById('root')
-  );
-}, 5000);
+// setTimeout(function () {
+//   ReactDOM.render(
+//     <h2>Clear!!</h2>,
+//     document.getElementById('root')
+//   );
+// }, 5000);
