@@ -23,7 +23,7 @@ MongoClient.connect(config.mongodbUri, { useNewUrlParser: true }, (err, db) => {
 const router = express.Router();
 
 /**
- * Get Contests
+ * Get All Contests
  */
 router.get('/contests', (req, res) => {
 
@@ -35,7 +35,8 @@ router.get('/contests', (req, res) => {
     .project({
       id: 1,
       categoryName: 1,
-      contestName: 1
+      contestName: 1,
+      nameIds: 1
     })
 
     .each((err, contest) => {
@@ -55,6 +56,33 @@ router.get('/contests', (req, res) => {
     // res.send({
     //   contests: contests
     // });
+});
+
+/**
+ * Get Contest Name Suggestions
+ */
+router.get('/names/:nameIds', (req, res) => {
+
+  const nameIds = req.params.nameIds.split(',').map(Number);
+
+  let names = {};
+
+  mdb.collection('names').find({ id: {$in: nameIds }})
+
+    .each((err, name) => {
+      assert.equal(null, err);
+
+        if(!name){
+          // no more names
+          res.send({ names });
+          return;
+        }
+
+        // add to new object
+        names[name.id] = name;
+
+    });
+
 });
 
 /**

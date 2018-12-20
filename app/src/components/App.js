@@ -90,6 +90,34 @@ class App extends React.Component {
 
   }
 
+  /**
+   * Fetch a contest name suggestion for a single contest.
+   *
+   *
+   */
+  fetchNames = (nameIds) => {
+
+    if(nameIds.length === 0) {
+      return;
+    }
+
+    api.fetchNames(nameIds).then(names => {
+      this.setState({
+        names
+      });
+    });
+
+  }
+
+  lookupName = (nameId) => {
+    if (!this.state.names || !this.state.names[nameId]) {
+      return {
+        name: '...'
+      };
+    }
+    return this.state.names[nameId];
+  };
+
   currentContest() {
     return this.state.contests[this.state.currentContestId];
   }
@@ -108,6 +136,8 @@ class App extends React.Component {
 
       return <Contest
               contestListClick={this.fetchContestList}
+              fetchNames={this.fetchNames}
+              lookupName={this.lookupName}
               {...this.currentContest()} />;
 
     }
