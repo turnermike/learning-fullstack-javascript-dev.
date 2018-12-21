@@ -122,7 +122,7 @@ router.post('/names', (req, res) => {
   mdb.collection('names').insertOne({ name }).then(result =>
     mdb.collection('contests').findOneAndUpdate(
         { _id: contestId },
-        [],
+        // [],
         { $push: { nameIds: result.insertedId } },
         { new: true }
     ).then(doc =>
