@@ -1,10 +1,16 @@
-// /api router
+/**
+ * @file api/index.js
+ *
+ * API router.
+ *
+ */
 import express from 'express';
 // import data from '../src/testData';
 // console.log('data', data);
 import { MongoClient, ObjectID } from 'mongodb';
 import assert from 'assert';
 import config from '../config';
+
 
 /**
  * Create MongoDB Object
@@ -19,11 +25,11 @@ MongoClient.connect(config.mongodbUri, { useNewUrlParser: true }, (err, db) => {
 
 });
 
-// init express router
+// Init express router,
 const router = express.Router();
 
 /**
- * Get All Contests
+ * Get all contests.
  */
 router.get('/contests', (req, res) => {
 
@@ -52,13 +58,10 @@ router.get('/contests', (req, res) => {
 
     });
 
-    // res.send({
-    //   contests: contests
-    // });
 });
 
 /**
- * Get Contest Name Suggestions
+ * Get contest name suggestions.
  */
 router.get('/names/:nameIds', (req, res) => {
 
@@ -85,14 +88,54 @@ router.get('/names/:nameIds', (req, res) => {
 });
 
 /**
- * Get Single Contest
+ * Get single contest.
  */
 router.get('/contest/:contestId', (req, res) => {
 
   mdb.collection('contests')
     .findOne({ _id: ObjectID(req.params.contestId) })
     .then(contest => res.send(contest))
-    .catch(console.error);
+    .catch(error => {
+      console.error(error.toString());
+      res.status(404).send('Bad Request');  // return 404 error
+    });
+
+});
+
+/**
+ * Post a name suggestion for a contest.
+ */
+router.post('/names', (req, res) => {
+  // console.log('req.body', req.body);
+  // res.send(req.body);
+
+  const contestId = ObjectID(req.body.contestId);
+  const name = req.body.newName;
+  // console.log('contestId', contestId);
+  // console.log('name', name);
+
+  // validation would go here
+
+  // add the new name to the names table
+  // add the new name's id to it's respective contest nameIds column
+  // "doc" returned from the update promise is an instance of the inserted mongodb document
+  mdb.collection('names').insertOne({ name }).then(result =>
+    mdb.collection('contests').findOneAndUpdate(
+        { _id: contestId },
+        [],
+        { $push: { nameIds: result.insertedId } },
+        { new: true }
+    ).then(doc =>
+      res.send({
+        updatedContest: doc.value,
+        newName: { _id: result.insertedId, name}
+      })
+    )
+  )
+  .catch(error => {
+    console.error(error.toString());
+    res.status(404).send('Bad Request');  // return 404 error
+  });
 
 });
 
