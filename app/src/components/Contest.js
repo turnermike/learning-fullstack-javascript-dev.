@@ -5,6 +5,7 @@ class Contest extends Component {
 
   componentDidMount() {
     this.props.fetchNames(this.props.nameIds); // function in App.js
+    // console.log('componentDidMount', this.props.nameIds);
   }
 
   handleSubmit = (event) => {

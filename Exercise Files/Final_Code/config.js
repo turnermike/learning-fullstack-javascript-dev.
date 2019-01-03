@@ -1,18 +1,22 @@
 const env = process.env;
 
+// variable export example
 export const nodeEnv = env.NODE_ENV || 'development';
 
+// function export example
 export const logStars = function(message) {
-  console.info('**********');
-  console.info(message);
-  console.info('**********');
+    console.info('**************************');
+    console.info(message);
+    console.info('**************************');
 };
 
+// default export object
 export default {
-  mongodbUri: 'mongodb://localhost:27017/test',
-  port: env.PORT || 8080,
-  host: env.HOST || '0.0.0.0',
+  mongodbUri: 'mongodb://localhost:27017/learning-fullstack-javascript-dev',
+  port: env.port || 8080,
+  host: env.host || '0.0.0.0',
   get serverUrl() {
     return `http://${this.host}:${this.port}`;
-  }
+}
+
 };

@@ -19,27 +19,18 @@ class App extends React.Component {
     initialData: propTypes.object.isRequired
   };
 
-  // state = {
-  //   contests: this.props.initialContests
-  // };
   state = this.props.initialData;
-
-
 
   componentDidMount() {
     // ajax stuff
     // timers/liseners
-    // console.log('did Mount');
-    // debugger;
 
     onPopState((event) => {
-      // console.log('event.state', event.state);
       this.setState({
         currentContestId: (event.state || {}).currentContestId
       });
 
     });
-
 
   }
 
@@ -131,7 +122,6 @@ class App extends React.Component {
   addName = (newName, contestId) => {
 
     api.addName(newName, contestId).then(res =>
-
       this.setState({
         contests: {
           ...this.state.contests,
@@ -145,6 +135,8 @@ class App extends React.Component {
 
     )
     .catch(console.error);
+
+    // this.fetchNames(this.props.nameIds);
 
   }
 

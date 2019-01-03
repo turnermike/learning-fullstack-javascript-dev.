@@ -126,6 +126,7 @@ router.post('/names', (req, res) => {
         { $push: { nameIds: result.insertedId } },
         { new: true }
     ).then(doc =>
+
       res.send({
         updatedContest: doc.value,
         newName: { _id: result.insertedId, name}

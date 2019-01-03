@@ -41,5 +41,6 @@ export const fetchNames = nameIds => {
 
 export const addName = (newName, contestId) => {
   return axios.post('/api/names', { newName, contestId })
-    .then(resp => resp.data);
+    .then(res => res.data);
+    // .then(res => console.log('data', res.data));
 }
